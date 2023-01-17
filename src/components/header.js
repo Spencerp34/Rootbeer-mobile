@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: Theme.rbBrown,
-        fontWeight: "700",
         fontFamily: 'Lobster-Regular',
+        fontSize: 36,
     }
 });
