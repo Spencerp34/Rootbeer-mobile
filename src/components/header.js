@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
 import { Theme } from '../constants';
 
 export default function Header() {
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
       width: "100%",
       alignItems: 'center',
       justifyContent: 'center',
+      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     },
     text: {
         color: Theme.rbBrown,
