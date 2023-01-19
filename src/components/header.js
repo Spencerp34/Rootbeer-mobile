@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
     text: {
         color: Theme.rbBrown,
         fontFamily: 'Lobster-Regular',
-        fontSize: 36,
+        fontSize: 40,
     }
 });
