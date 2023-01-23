@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View, Platform, StatusBar, TextInput, SliderComponent } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 
 export default function Submission() {
     return (
         <View style={styles.form} >
-            <TextInput></TextInput>
-            <SliderComponent maximumValue={5} minimumValue={1} step={0.5} />
-          <Text style={styles.text} >Root Beer Ratings</Text>
+            <Text>New Submission</Text>
+            <TextInput placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput placeholder='Score' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput placeholder='image' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput placeholder='Review' placeholderTextColor={"#aaa"} style={styles.textInput} />
         </View>
     );        
 }
@@ -13,5 +16,12 @@ export default function Submission() {
 const styles = StyleSheet.create({
     form: {
         flex: 1,
-    }
+        width: "80%",
+    },
+    textInput: {
+        width: 100,
+        borderColor: "skyblue",
+        borderWidth: 2,
+        textAlign: "center"
+    }    
 })
