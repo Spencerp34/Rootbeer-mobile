@@ -1,6 +1,15 @@
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { useState } from 'react';
 
 export default function Submission() {
+    const [formData, setFormData] = useState({
+        brand_name: "",
+        author_score: 1,
+        image_url: null,
+        shop_url: null,
+        review_description: "",
+    })
+
     return (
         <View style={styles.form} >
             <Text>New Submission</Text>
