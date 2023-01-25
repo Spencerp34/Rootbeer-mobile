@@ -1,29 +1,39 @@
 import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { useState } from 'react';
 import { Theme } from "../constants"
+import axios from 'axios';
 
 export default function Submission() {
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         brand_name: "",
-        author_score: 1,
-        image_url: null,
+        author_review: null,
+        img_url: null,
         shop_url: null,
         review_description: "",
-    })
+    }
+    const [formData, setFormData] = useState(initialFormData)
 
-    const loggin = () =>{
+    const submit = () =>{
         console.log(formData)
+        axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, formData)
+            .then((response) => {
+                console.log(response)
+                setFormData(initialFormData)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     return (
         <View style={styles.form} >
             <Text style={{color: Theme.rbBrown}} >New Submission</Text>
-            <TextInput onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput onChangeText={(change) => setFormData({...formData, author_score: change})} placeholder='Score' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput onChangeText={(change) => setFormData({...formData, image_url: change})} placeholder='Image URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
-            <Pressable onPress={() => loggin()} color={Theme.rbBrown} style={styles.button} >
+            <TextInput value={formData.brand_name} onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput value={formData.author_review} onChangeText={(change) => setFormData({...formData, author_review: parseFloat(change)})} placeholder='Score' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput value={formData.img_url} onChangeText={(change) => setFormData({...formData, img_url: change})} placeholder='Image URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput value={formData.shop_url} onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput value={formData.review_description} onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
+            <Pressable onPress={() => submit()} color={Theme.rbBrown} style={styles.button} >
                 <Text style={styles.buttonText} >Submit Review</Text>
             </Pressable>
         </View>
