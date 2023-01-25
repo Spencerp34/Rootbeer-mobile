@@ -17,13 +17,13 @@ export default function Submission() {
 
     return (
         <View style={styles.form} >
-            <Text>New Submission</Text>
+            <Text style={{color: Theme.rbBrown}} >New Submission</Text>
             <TextInput onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput onChangeText={(change) => setFormData({...formData, author_score: change})} placeholder='Score' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput onChangeText={(change) => setFormData({...formData, image_url: change})} placeholder='Image URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
-            <Button title='Log' onPress={() => loggin()} />
+            <Button title='Log' onPress={() => loggin()} color={Theme.rbBrown} />
         </View>
     );        
 }
@@ -42,5 +42,5 @@ const styles = StyleSheet.create({
     },
     bigTextInput: {
         height: 100,
-    }
+    },
 })
