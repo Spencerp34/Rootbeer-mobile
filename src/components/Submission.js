@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { useState } from 'react';
 import { Theme } from "../constants"
 
@@ -23,7 +23,9 @@ export default function Submission() {
             <TextInput onChangeText={(change) => setFormData({...formData, image_url: change})} placeholder='Image URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
-            <Button title='Log' onPress={() => loggin()} color={Theme.rbBrown} />
+            <Pressable onPress={() => loggin()} color={Theme.rbBrown} style={styles.button} >
+                <Text style={styles.buttonText} >Submit Review</Text>
+            </Pressable>
         </View>
     );        
 }
@@ -39,8 +41,21 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         textAlign: "center",
         margin: 10,
+        height: 40,
     },
     bigTextInput: {
         height: 100,
     },
+    button: {
+        width: "100%",
+        backgroundColor: Theme.rbBrown,
+        alignItems: "center",
+        justifyContent: "center",
+        height: 50,
+        margin: 10
+    },
+    buttonText: {
+        color: Theme.creme,
+        fontWeight: "500",
+    }
 })
