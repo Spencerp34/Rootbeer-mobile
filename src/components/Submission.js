@@ -10,14 +10,19 @@ export default function Submission() {
         review_description: "",
     })
 
+    function loggin(){
+        console.log(formData)
+    }
+
     return (
         <View style={styles.form} >
             <Text>New Submission</Text>
-            <TextInput placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput onChange={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput placeholder='Score' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput placeholder='image' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput placeholder='Review' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <Button on>Log</Button>
         </View>
     );        
 }
