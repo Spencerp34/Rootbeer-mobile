@@ -10,19 +10,19 @@ export default function Submission() {
         review_description: "",
     })
 
-    function loggin(){
+    const loggin = () =>{
         console.log(formData)
     }
 
     return (
         <View style={styles.form} >
             <Text>New Submission</Text>
-            <TextInput onChange={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput placeholder='Score' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput placeholder='image' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput placeholder='Review' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <Button on>Log</Button>
+            <TextInput onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput onChangeText={(change) => setFormData({...formData, author_score: change})} placeholder='Score' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput onChangeText={(change) => setFormData({...formData, image_url: change})} placeholder='image' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <Button title='Log' onPress={() => loggin()} />
         </View>
     );        
 }
