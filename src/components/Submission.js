@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import { useState } from 'react';
+import { Theme } from "../constants"
 
 export default function Submission() {
     const [formData, setFormData] = useState({
@@ -19,9 +20,9 @@ export default function Submission() {
             <Text>New Submission</Text>
             <TextInput onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput onChangeText={(change) => setFormData({...formData, author_score: change})} placeholder='Score' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput onChangeText={(change) => setFormData({...formData, image_url: change})} placeholder='image' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput onChangeText={(change) => setFormData({...formData, image_url: change})} placeholder='Image URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
             <Button title='Log' onPress={() => loggin()} />
         </View>
     );        
@@ -33,9 +34,13 @@ const styles = StyleSheet.create({
         width: "80%",
     },
     textInput: {
-        width: 100,
-        borderColor: "skyblue",
+        width: "100%",
+        borderColor: Theme.rbBrown,
         borderWidth: 2,
-        textAlign: "center"
-    }    
+        textAlign: "center",
+        margin: 10,
+    },
+    bigTextInput: {
+        height: 100,
+    }
 })
