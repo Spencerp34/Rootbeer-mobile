@@ -30,7 +30,8 @@ export default function Submission() {
             <Text style={{color: Theme.rbBrown}} >New Submission</Text>
             <TextInput value={formData.brand_name} onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput value={formData.author_review} onChangeText={(change) => setFormData({...formData, author_review: parseFloat(change)})} placeholder='Score' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <Slider maximumValue={5} minimumValue={1} value={formData.author_review} />
+            <Text>{formData.author_review}</Text>
+            <Slider maximumValue={5} minimumValue={1} value={formData.author_review} step={0.5} onValueChange={(change)=> setFormData({...formData, author_review: change})} />
             <TextInput value={formData.img_url} onChangeText={(change) => setFormData({...formData, img_url: change})} placeholder='Image URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput value={formData.shop_url} onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput value={formData.review_description} onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
