@@ -15,7 +15,7 @@ export default function Submission() {
     const [formData, setFormData] = useState(initialFormData)
 
     const submit = () =>{
-        // console.log(formData)
+        console.log(formData)
         axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, formData)
             .then((response) => {
                 console.log(response)
