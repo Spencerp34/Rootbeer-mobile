@@ -18,7 +18,6 @@ export default function Submission() {
         console.log(formData)
         axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, formData)
             .then((response) => {
-                console.log(response)
                 setFormData(initialFormData)
             })
             .catch((err) => {
