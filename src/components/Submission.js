@@ -23,6 +23,13 @@ export default function Submission() {
         
     }
 
+    const handleTakeImg = () => {
+        const options = {
+            noData: true
+        };
+        
+    }
+
     const submit = () =>{
         console.log(formData)
         axios.post(`http://localhost:4000/reviews`, formData)
@@ -52,7 +59,7 @@ export default function Submission() {
                         <Pressable onPress={handleUploadImg}>
                             <Image source={ImageIcon} style={{width:50, height: 50}} />
                         </Pressable>
-                        <Pressable onPress={handleUploadImg}>
+                        <Pressable onPress={handleTakeImg}>
                             <Image source={CameraIcon} style={{width:50, height: 50}} />
                         </Pressable>
                     </View>
