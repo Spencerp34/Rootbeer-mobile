@@ -36,19 +36,28 @@ export default function Submission() {
 
     return (
         <View style={styles.form} >
-            <Text style={{color: Theme.rbBrown}} >New Submission</Text>
-            <TextInput value={formData.brand_name} onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >{formData.author_review}</Text>
-            <Slider maximumValue={5} minimumValue={1} value={formData.author_review} step={0.5} onValueChange={(change)=> setFormData({...formData, author_review: change[0]})} />
-            <TextInput value={formData.shop_url} onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput value={formData.review_description} onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
-            <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
-            <Pressable onPress={handleUploadImg}>
-                <Image source={ImageIcon} style={{width:50, height: 50}} />
-            </Pressable>
-            <Pressable onPress={handleUploadImg}>
-                <Image source={CameraIcon} style={{width:50, height: 50}} />
-            </Pressable>
+            <View>
+                <Text style={{color: Theme.rbBrown}} >New Submission</Text>
+                <TextInput value={formData.brand_name} onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >{formData.author_review}</Text>
+                <Slider maximumValue={5} minimumValue={1} value={formData.author_review} step={0.5} onValueChange={(change)=> setFormData({...formData, author_review: change[0]})} />
+                <TextInput value={formData.shop_url} onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                <TextInput value={formData.review_description} onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
+                <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
+                <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
+                    <View style={{width:200, height:200, backgroundColor: Theme.rbBrown, margin: 10}} >
+
+                    </View>
+                    <View style={{justifyContent: "space-evenly"}} >
+                        <Pressable onPress={handleUploadImg}>
+                            <Image source={ImageIcon} style={{width:50, height: 50}} />
+                        </Pressable>
+                        <Pressable onPress={handleUploadImg}>
+                            <Image source={CameraIcon} style={{width:50, height: 50}} />
+                        </Pressable>
+                    </View>
+                </View>
+            </View>
             <Pressable onPress={() => submit()} color={Theme.rbBrown} style={styles.button} >
                 <Text style={styles.buttonText} >Submit Review</Text>
             </Pressable>
