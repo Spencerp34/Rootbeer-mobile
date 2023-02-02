@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-native';
 import {Slider} from '@miblanchard/react-native-slider';
 import { useState } from 'react';
 import { Theme } from "../constants"
 import axios from 'axios';
+import ImageIcon from "../../assets/imageIcon.png"
+import CameraIcon from "../../assets/cameraIcon.png"
 
 export default function Submission() {
     const initialFormData = {
@@ -23,7 +25,7 @@ export default function Submission() {
 
     const submit = () =>{
         console.log(formData)
-        axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, formData)
+        axios.post(`http://localhost:4000/reviews`, formData)
             .then((response) => {
                 setFormData(initialFormData)
             })
@@ -38,9 +40,15 @@ export default function Submission() {
             <TextInput value={formData.brand_name} onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >{formData.author_review}</Text>
             <Slider maximumValue={5} minimumValue={1} value={formData.author_review} step={0.5} onValueChange={(change)=> setFormData({...formData, author_review: change[0]})} />
-            <TextInput value={formData.img_url} onChangeText={(change) => setFormData({...formData, img_url: change})} placeholder='Image URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
-            <TextInput value={formData.shop_url} onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+            <TextInput value={formData.shop_url} onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
             <TextInput value={formData.review_description} onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
+            <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
+            <Pressable onPress={handleUploadImg}>
+                <Image source={ImageIcon} style={{width:50, height: 50}} />
+            </Pressable>
+            <Pressable onPress={handleUploadImg}>
+                <Image source={CameraIcon} style={{width:50, height: 50}} />
+            </Pressable>
             <Pressable onPress={() => submit()} color={Theme.rbBrown} style={styles.button} >
                 <Text style={styles.buttonText} >Submit Review</Text>
             </Pressable>
