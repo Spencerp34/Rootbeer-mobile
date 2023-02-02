@@ -14,6 +14,13 @@ export default function Submission() {
     }
     const [formData, setFormData] = useState(initialFormData)
 
+    const handleUploadImg = () => {
+        const options = {
+            noData: true
+        };
+        
+    }
+
     const submit = () =>{
         console.log(formData)
         axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, formData)
