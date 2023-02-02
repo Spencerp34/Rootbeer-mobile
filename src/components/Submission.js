@@ -1,33 +1,37 @@
 import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-native';
 import {Slider} from '@miblanchard/react-native-slider';
+import * as ImagePicker from "expo-image-picker";
 import { useState } from 'react';
-import { Theme } from "../constants"
+import { Theme } from "../constants";
 import axios from 'axios';
-import ImageIcon from "../../assets/imageIcon.png"
-import CameraIcon from "../../assets/cameraIcon.png"
+import ImageIcon from "../../assets/imageIcon.png";
+import CameraIcon from "../../assets/cameraIcon.png";
 
 export default function Submission() {
     const initialFormData = {
         brand_name: null,
         author_review: 2,
-        img_url: null,
+        review_image: null,
         shop_url: null,
         review_description: null,
     }
     const [formData, setFormData] = useState(initialFormData)
 
-    const handleUploadImg = () => {
-        const options = {
-            noData: true
-        };
-        
+    const handleUploadImg = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4,3],
+            quality:0
+        })
+        console.log(result.assets[0])
+        if(!result.canceled){
+            setFormData({...formData, review_image: result.assets[0].uri})
+        }
     }
 
     const handleTakeImg = () => {
-        const options = {
-            noData: true
-        };
-        
+        console.log("opening camera")
     }
 
     const submit = () =>{
@@ -52,8 +56,8 @@ export default function Submission() {
                 <TextInput value={formData.review_description} onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
                 <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
-                    <View style={{width:200, height:200, backgroundColor: Theme.rbBrown, margin: 10}} >
-
+                    <View style={{width:200, height:200, margin: 10}} >
+                        {formData.review_image && <Image source={{uri: formData.review_image}} style={{width:200, height:200}} /> }
                     </View>
                     <View style={{justifyContent: "space-evenly"}} >
                         <Pressable onPress={handleUploadImg}>
