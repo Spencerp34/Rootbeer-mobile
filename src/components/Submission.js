@@ -12,11 +12,11 @@ export default function Submission() {
     const initialFormData = {
         brand_name: null,
         author_review: 2,
-        review_img: null,
         shop_url: null,
         review_description: null,
-    }
-    const [formData, setFormData] = useState(initialFormData)
+        review_img: null,
+    };
+    const [formData, setFormData] = useState(initialFormData);
 
     const handleUploadImg = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -46,9 +46,16 @@ export default function Submission() {
 
     const submit = () =>{
         console.log(formData)
-        let data = new FormData();
-        data.append("file", formData.review_img, "test_name")
-        axios.post(`http://localhost:4000/reviews`, formData)
+        const submissionData = new FormData();
+        submissionData.append("brand_name", formData.brand_name)
+        submissionData.append("author_review", formData.author_review)
+        submissionData.append("shop_url", formData.shop_url)
+        submissionData.append("review_description", formData.review_description)
+        if(formData.review_img){
+            submissionData.append("review_img", formData.review_img)
+        }
+
+        axios.post(`http://localhost:4000/reviews`, submissionData)
             .then((response) => {
                 setFormData(initialFormData)
             })
