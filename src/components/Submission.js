@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-native';
 import {Slider} from '@miblanchard/react-native-slider';
 import * as ImagePicker from "expo-image-picker";
+import FormData from 'form-data';
 import { useState } from 'react';
 import { Theme } from "../constants";
 import axios from 'axios';
@@ -11,7 +12,7 @@ export default function Submission() {
     const initialFormData = {
         brand_name: null,
         author_review: 2,
-        review_image: null,
+        review_img: null,
         shop_url: null,
         review_description: null,
     }
@@ -26,16 +27,27 @@ export default function Submission() {
         })
         console.log(result.assets[0])
         if(!result.canceled){
-            setFormData({...formData, review_image: result.assets[0].uri})
+            setFormData({...formData, review_img: result.assets[0].uri})
         }
     }
 
-    const handleTakeImg = () => {
-        console.log("opening camera")
+    const handleTakeImg = async () => {
+        let result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4,3],
+            quality:0
+        })
+        console.log(result.assets[0])
+        if(!result.canceled){
+            setFormData({...formData, review_img: result.assets[0].uri})
+        }
     }
 
     const submit = () =>{
         console.log(formData)
+        let data = new FormData();
+        data.append("file", formData.review_img, "test_name")
         axios.post(`http://localhost:4000/reviews`, formData)
             .then((response) => {
                 setFormData(initialFormData)
@@ -57,7 +69,7 @@ export default function Submission() {
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
                 <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
                     <View style={{width:200, height:200, margin: 10}} >
-                        {formData.review_image && <Image source={{uri: formData.review_image}} style={{width:200, height:200}} /> }
+                        {formData.review_img && <Image source={{uri: formData.review_img}} style={{width:200, height:200}} /> }
                     </View>
                     <View style={{justifyContent: "space-evenly"}} >
                         <Pressable onPress={handleUploadImg}>
