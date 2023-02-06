@@ -23,11 +23,12 @@ export default function Submission() {
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4,3],
-            quality:0
+            quality:0,
+            base64: true,
         })
         console.log(result.assets[0])
         if(!result.canceled){
-            setFormData({...formData, review_img: result.assets[0].uri})
+            setFormData({...formData, review_img: result.assets})
         }
     }
 
@@ -36,11 +37,12 @@ export default function Submission() {
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4,3],
-            quality:0
+            quality:0,
+            base64: true,
         })
         console.log(result.assets[0])
         if(!result.canceled){
-            setFormData({...formData, review_img: result.assets[0].uri})
+            setFormData({...formData, review_img: result.assets})
         }
     }
 
@@ -76,7 +78,7 @@ export default function Submission() {
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
                 <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
                     <View style={{width:200, height:200, margin: 10}} >
-                        {formData.review_img && <Image source={{uri: formData.review_img}} style={{width:200, height:200}} /> }
+                        {formData.review_img && <Image source={{uri: formData.review_img[0].uri}} style={{width:200, height:200}} /> }
                     </View>
                     <View style={{justifyContent: "space-evenly"}} >
                         <Pressable onPress={handleUploadImg}>
