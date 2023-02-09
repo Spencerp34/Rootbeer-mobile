@@ -28,7 +28,7 @@ export default function Submission() {
         })
         console.log(result.assets[0])
         if(!result.canceled){
-            setFormData({...formData, review_img: result.assets})
+            setFormData({...formData, review_img: result.assets[0].uri})
         }
     }
 
@@ -40,7 +40,6 @@ export default function Submission() {
             quality:0,
             base64: true,
         })
-        console.log(result.assets[0])
         if(!result.canceled){
             setFormData({...formData, review_img: result.assets})
         }
@@ -54,7 +53,11 @@ export default function Submission() {
         submissionData.append("shop_url", formData.shop_url)
         submissionData.append("review_description", formData.review_description)
         if(formData.review_img){
-            submissionData.append("review_img", formData.review_img)
+            submissionData.append("review_img", {
+                name: new Date() + "_image",
+                uri: formData.review_img,
+                type: "image/jpg",
+            })
         }
 
         axios.post(`http://localhost:4000/reviews`, submissionData)
@@ -78,7 +81,7 @@ export default function Submission() {
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
                 <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
                     <View style={{width:200, height:200, margin: 10}} >
-                        {formData.review_img && <Image source={{uri: formData.review_img[0].uri}} style={{width:200, height:200}} /> }
+                        {formData.review_img && <Image source={{uri: formData.review_img}} style={{width:200, height:200}} /> }
                     </View>
                     <View style={{justifyContent: "space-evenly"}} >
                         <Pressable onPress={handleUploadImg}>
