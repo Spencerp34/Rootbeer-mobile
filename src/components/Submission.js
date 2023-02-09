@@ -24,11 +24,10 @@ export default function Submission() {
             allowsEditing: true,
             aspect: [4,3],
             quality:0,
-            base64: true,
         })
         console.log(result.assets[0])
         if(!result.canceled){
-            setFormData({...formData, review_img: result.assets[0].uri})
+            setFormData({...formData, review_img: result.assets[0]})
         }
     }
 
@@ -54,8 +53,8 @@ export default function Submission() {
         submissionData.append("review_description", formData.review_description)
         if(formData.review_img){
             submissionData.append("review_img", {
-                name: new Date() + "_image",
-                uri: formData.review_img,
+                name: formData.review_img.fileName || new Date() + "_img",
+                uri: formData.review_img.uri,
                 type: "image/jpg",
             })
         }
@@ -81,7 +80,7 @@ export default function Submission() {
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
                 <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
                     <View style={{width:200, height:200, margin: 10}} >
-                        {formData.review_img && <Image source={{uri: formData.review_img}} style={{width:200, height:200}} /> }
+                        {formData.review_img && <Image source={{uri: formData.review_img.uri}} style={{width:200, height:200}} /> }
                     </View>
                     <View style={{justifyContent: "space-evenly"}} >
                         <Pressable onPress={handleUploadImg}>
