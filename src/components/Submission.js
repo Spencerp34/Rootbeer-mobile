@@ -25,7 +25,6 @@ export default function Submission() {
             aspect: [4,3],
             quality:0,
         })
-        console.log(result.assets[0])
         if(!result.canceled){
             setFormData({...formData, review_img: result.assets[0]})
         }
@@ -53,13 +52,20 @@ export default function Submission() {
         submissionData.append("review_description", formData.review_description)
         if(formData.review_img){
             submissionData.append("review_img", {
-                name: formData.review_img.fileName || new Date() + "_img",
+                name: "test",
                 uri: formData.review_img.uri,
                 type: "image/jpg",
             })
         }
 
-        axios.post(`http://localhost:4000/reviews`, submissionData)
+        console.log(submissionData)
+
+        axios.post(`http://localhost:4000/reviews`, submissionData, {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "multipart/form-data"
+            }
+        })
             .then((response) => {
                 setFormData(initialFormData)
             })
