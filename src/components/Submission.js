@@ -36,7 +36,6 @@ export default function Submission() {
             allowsEditing: true,
             aspect: [4,3],
             quality:0,
-            base64: true,
         })
         if(!result.canceled){
             setFormData({...formData, review_img: result.assets})
@@ -53,11 +52,11 @@ export default function Submission() {
             submissionData.append("review_img", {
                 name: formData.review_img.fileName || "test",
                 uri: formData.review_img.uri,
-                type: formData.review_img.type || "image/jpg",
+                type: "image/jpg",
             })
         }
 
-        axios.post(`http://localhost:4000/reviews`, submissionData, {
+        axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, submissionData, {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "multipart/form-data"
