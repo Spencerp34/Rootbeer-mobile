@@ -20,7 +20,7 @@ export default function Submission() {
 
     const handleUploadImg = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4,3],
             quality:0,
@@ -44,7 +44,6 @@ export default function Submission() {
     }
 
     const submit = () =>{
-        console.log(formData)
         const submissionData = new FormData();
         submissionData.append("brand_name", formData.brand_name)
         submissionData.append("author_review", formData.author_review)
@@ -52,13 +51,11 @@ export default function Submission() {
         submissionData.append("review_description", formData.review_description)
         if(formData.review_img){
             submissionData.append("review_img", {
-                name: "test",
+                name: formData.review_img.fileName || "test",
                 uri: formData.review_img.uri,
-                type: "image/jpg",
+                type: formData.review_img.type || "image/jpg",
             })
         }
-
-        console.log(submissionData)
 
         axios.post(`http://localhost:4000/reviews`, submissionData, {
             headers: {
