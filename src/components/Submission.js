@@ -82,7 +82,7 @@ export default function Submission() {
         <View style={styles.form} >
             <View>
                 <Text style={{color: Theme.rbBrown}} >New Submission</Text>
-                <TextInput value={formData.brand_name} onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                <TextInput value={formData.brand_name} onChangeText={(change) => {setFormData({...formData, brand_name: change}); setFormErrors({...formErrors, brand_name: null})}} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
                 <Text style={styles.error}>{formErrors.brand_name}</Text>
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >{formData.author_review}</Text>
                 <Slider maximumValue={5} minimumValue={1} value={formData.author_review} step={0.5} onValueChange={(change)=> setFormData({...formData, author_review: change[0]})} />
