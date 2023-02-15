@@ -7,6 +7,7 @@ import { Theme } from "../constants";
 import axios from 'axios';
 import ImageIcon from "../../assets/imageIcon.png";
 import CameraIcon from "../../assets/cameraIcon.png";
+import schema from './validation';
 
 export default function Submission() {
     const initialFormData = {
@@ -17,6 +18,7 @@ export default function Submission() {
         review_img: null,
     };
     const [formData, setFormData] = useState(initialFormData);
+    const [formErrors, setFormErrors] = useState({...initialFormData, author_review: null})
 
     const handleUploadImg = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -42,32 +44,38 @@ export default function Submission() {
         }
     }
 
-    const submit = () =>{
-        const submissionData = new FormData();
-        submissionData.append("brand_name", formData.brand_name)
-        submissionData.append("author_review", formData.author_review)
-        submissionData.append("shop_url", formData.shop_url)
-        submissionData.append("review_description", formData.review_description)
-        if(formData.review_img){
-            submissionData.append("review_img", {
-                name: formData.review_img.fileName || "test",
-                uri: formData.review_img.uri,
-                type: "image/jpg",
-            })
-        }
+    const submit = async() =>{
+        const isValid = await schema.isValid(formData)
 
-        axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, submissionData, {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "multipart/form-data"
+        if(isValid){
+            const submissionData = new FormData();
+            submissionData.append("brand_name", formData.brand_name)
+            submissionData.append("author_review", formData.author_review)
+            submissionData.append("shop_url", formData.shop_url)
+            submissionData.append("review_description", formData.review_description)
+            if(formData.review_img){
+                submissionData.append("review_img", {
+                    name: formData.review_img.fileName || "test",
+                    uri: formData.review_img.uri,
+                    type: "image/jpg",
+                })
             }
-        })
-            .then((response) => {
-                setFormData(initialFormData)
+    
+            axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, submissionData, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "multipart/form-data"
+                }
             })
-            .catch((err) => {
-                console.log(err)
-            })
+                .then((response) => {
+                    setFormData(initialFormData)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }else{
+            setFormErrors({...formErrors, brand_name: "Required"})
+        }
     }
 
     return (
@@ -75,10 +83,13 @@ export default function Submission() {
             <View>
                 <Text style={{color: Theme.rbBrown}} >New Submission</Text>
                 <TextInput value={formData.brand_name} onChangeText={(change) => setFormData({...formData, brand_name: change})} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                <Text style={styles.error}>{formErrors.brand_name}</Text>
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >{formData.author_review}</Text>
                 <Slider maximumValue={5} minimumValue={1} value={formData.author_review} step={0.5} onValueChange={(change)=> setFormData({...formData, author_review: change[0]})} />
                 <TextInput value={formData.shop_url} onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                <Text style={styles.error}>{formErrors.shop_url}</Text>
                 <TextInput value={formData.review_description} onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
+                <Text style={styles.error}>{formErrors.review_description}</Text>
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
                 <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
                     <View style={{width:200, height:200, margin: 10}} >
@@ -128,5 +139,10 @@ const styles = StyleSheet.create({
     buttonText: {
         color: Theme.creme,
         fontWeight: "500",
+    },
+    error:{
+        color: "red",
+        justifyContent: "center",
+        marginLeft: 15,
     }
 })
