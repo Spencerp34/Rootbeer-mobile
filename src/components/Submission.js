@@ -47,45 +47,37 @@ export default function Submission() {
     const submit = async() =>{
         await schema.validate(formData, {abortEarly: false})
             .then((res)=> {
-                
+                const submissionData = new FormData();
+                submissionData.append("brand_name", formData.brand_name)
+                submissionData.append("author_review", formData.author_review)
+                submissionData.append("shop_url", formData.shop_url)
+                submissionData.append("review_description", formData.review_description)
+                if(formData.review_img){
+                    submissionData.append("review_img", {
+                        name: formData.review_img.fileName || "test",
+                        uri: formData.review_img.uri,
+                        type: "image/jpg",
+                    })
+                }
+        
+                axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, submissionData, {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
+                    .then((response) => {
+                        setFormData(initialFormData)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
             })
             .catch((err) => {
-                const errors = {};
                 err.inner.forEach((e) => {
-                    errors[e.path] = e.message;
+                    formErrors[e.path] = e.message;
                 })
-                console.log(errors)
             })
-
-        // if(isValid){
-        //     const submissionData = new FormData();
-        //     submissionData.append("brand_name", formData.brand_name)
-        //     submissionData.append("author_review", formData.author_review)
-        //     submissionData.append("shop_url", formData.shop_url)
-        //     submissionData.append("review_description", formData.review_description)
-        //     if(formData.review_img){
-        //         submissionData.append("review_img", {
-        //             name: formData.review_img.fileName || "test",
-        //             uri: formData.review_img.uri,
-        //             type: "image/jpg",
-        //         })
-        //     }
-    
-        //     axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, submissionData, {
-        //         headers: {
-        //             Accept: "application/json",
-        //             "Content-Type": "multipart/form-data"
-        //         }
-        //     })
-        //         .then((response) => {
-        //             setFormData(initialFormData)
-        //         })
-        //         .catch((err) => {
-        //             console.log(err)
-        //         })
-        // }else{
-        //     setFormErrors({...formErrors, brand_name: "Required"})
-        // }
     }
 
     return (
