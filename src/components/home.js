@@ -25,7 +25,7 @@ export default function Home(){
             <View style={styles.card} >
                 <Text>{letter}</Text>
                 <Image source={Logo} style={{width: 60, height: 60}} />
-                <View>
+                <View style={{flexDirection: "row"}} >
                     {ratingRender(author_score)}
                 </View>
             </View>
