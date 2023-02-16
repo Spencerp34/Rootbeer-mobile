@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-nativ
 import {Slider} from '@miblanchard/react-native-slider';
 import * as ImagePicker from "expo-image-picker";
 import FormData from 'form-data';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Theme } from "../constants";
 import axios from 'axios';
 import ImageIcon from "../../assets/imageIcon.png";
@@ -122,10 +122,11 @@ export default function Submission() {
 const styles = StyleSheet.create({
     form: {
         flex: 1,
-        width: "80%",
+        width: "90%",
+        margin: 15
     },
     textInput: {
-        width: "100%",
+        width: "95%",
         borderColor: Theme.rbBrown,
         borderWidth: 2,
         textAlign: "center",
