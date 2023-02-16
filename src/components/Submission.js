@@ -75,7 +75,7 @@ export default function Submission() {
             })
             .catch((err) => {
                 err.inner.forEach((e) => {
-                    formErrors[e.path] = e.message;
+                    setFormErrors({...formErrors, [e.path]: e.message});
                 })
             })
     }
@@ -88,9 +88,9 @@ export default function Submission() {
                 <Text style={styles.error}>{formErrors.brand_name}</Text>
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >{formData.author_review}</Text>
                 <Slider maximumValue={5} minimumValue={1} value={formData.author_review} step={0.5} onValueChange={(change)=> setFormData({...formData, author_review: change[0]})} />
-                <TextInput value={formData.shop_url} onChangeText={(change) => setFormData({...formData, shop_url: change})} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                <TextInput value={formData.shop_url} onChangeText={(change) => {setFormData({...formData, shop_url: change}); setFormErrors({...formErrors, shop_url: null})}} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
                 <Text style={styles.error}>{formErrors.shop_url}</Text>
-                <TextInput value={formData.review_description} onChangeText={(change) => setFormData({...formData, review_description: change})} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
+                <TextInput value={formData.review_description} onChangeText={(change) => {setFormData({...formData, review_description: change}); setFormErrors({...formErrors, review_description: null})}} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
                 <Text style={styles.error}>{formErrors.review_description}</Text>
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
                 <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
