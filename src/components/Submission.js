@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-nativ
 import {Slider} from '@miblanchard/react-native-slider';
 import * as ImagePicker from "expo-image-picker";
 import FormData from 'form-data';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Theme } from "../constants";
 import axios from 'axios';
 import ImageIcon from "../../assets/imageIcon.png";
@@ -18,7 +18,7 @@ export default function Submission() {
         review_img: null,
     };
     const [formData, setFormData] = useState(initialFormData);
-    const [formErrors, setFormErrors] = useState({...initialFormData, author_review: null})
+    const [formErrors, setFormErrors] = useState({...initialFormData, author_review: null});
 
     const handleUploadImg = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -73,10 +73,15 @@ export default function Submission() {
                         console.log(err)
                     })
             })
-            .catch((err) => {
-                err.inner.forEach((e) => {
-                    setFormErrors({...formErrors, [e.path]: e.message});
+            .catch(async(err) => {
+                let newObj = {}
+                err.inner.map((e) => {
+                    newObj = Object.assign({...newObj, [e.path]: e.message})
                 })
+                setFormErrors({
+                    ...formErrors,
+                    ...newObj
+                });
             })
     }
 
