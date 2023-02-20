@@ -23,10 +23,10 @@ export default function Home(){
         const ratingRender = (rating) => {
             let stars = []
             if(rating%1 === 0.5){
-                stars.push( <Image source={HalfStar} alt="half star rating" style={styles.halfStar} />)
+                stars.push( <Image source={HalfStar} alt="half star rating" style={styles.halfStar} key={`half star`}/>)
             }
             for(let i = 1; i <= rating; i++){
-                stars.unshift(<Image source={Logo} alt="star rating" style={styles.star} />)
+                stars.unshift(<Image source={Logo} alt="star rating" style={styles.star} key={`Star ${i}/5`} />)
             }
             return stars
         }
@@ -34,7 +34,7 @@ export default function Home(){
         return(
             <View style={styles.card} >
                 <Text>{review.brand_name}</Text>
-                <Image source={Logo} style={{width: 60, height: 60}} />
+                <Image source={ review.review_img ? {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`} : Logo} style={{width: 60, height: 60}} />
                 <View style={{flexDirection: "row"}} >
                     {ratingRender(review.author_review)}
                 </View>
@@ -46,7 +46,7 @@ export default function Home(){
         <ScrollView contentContainerStyle={styles.content} >
             <View style={styles.content} >
                 {results.map((review, index) => {
-                    return <Card review={review} key={index} />
+                    return <Card review={review} key={review.review_id} />
                 })}
             </View>
         </ScrollView>
