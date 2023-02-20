@@ -1,20 +1,18 @@
-import { StyleSheet, Text, View, ScrollView, Image, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Pressable } from 'react-native';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Logo from "../../assets/logo.png"
-import HalfStar from "../../assets/HalfStar.png"
+import Logo from "../../assets/logo.png";
+import HalfStar from "../../assets/HalfStar.png";
 
 export default function Home(){
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState([]);
 
     useEffect(()=>{
         axios.get(`https://rootbeerbe-production.up.railway.app/reviews`)
             .then((res) => {
-                setResults(res.data)
-            })
-    }, [])
-
-    const author_score = 3.5
+                setResults(res.data);
+            });
+    }, []);
 
 
     const Card =(props)=>{
