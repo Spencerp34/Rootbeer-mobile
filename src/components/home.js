@@ -32,7 +32,13 @@ export default function Home(){
 
         return(
             <Pressable onPress={()=> { setIsFlipped(!isFlipped) }} >
-                { isFlipped ? <Text>Test</Text> : 
+                { isFlipped 
+                ? 
+                    <View style={styles.card}>
+                        <Text>{review.brand_name}</Text>
+                        <Text>{review.review_description} </Text>
+                    </View>
+                : 
                     <View style={styles.card} >
                         <Text>{review.brand_name}</Text>
                         <Image source={ review.review_img ? {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`} : Logo} style={{width: 60, height: 60}} />
