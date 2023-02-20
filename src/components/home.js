@@ -17,6 +17,7 @@ export default function Home(){
 
     const Card =(props)=>{
         const {review} = props;
+        const [isFlipped, setIsFlipped] = useState(false);
 
         const ratingRender = (rating) => {
             let stars = []
@@ -30,13 +31,18 @@ export default function Home(){
         }
 
         return(
-            <View style={styles.card} >
-                <Text>{review.brand_name}</Text>
-                <Image source={ review.review_img ? {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`} : Logo} style={{width: 60, height: 60}} />
-                <View style={{flexDirection: "row"}} >
-                    {ratingRender(review.author_review)}
-                </View>
-            </View>
+            <Pressable onPress={()=> { setIsFlipped(!isFlipped) }} >
+                { isFlipped ? <Text>Test</Text> : 
+                    <View style={styles.card} >
+                        <Text>{review.brand_name}</Text>
+                        <Image source={ review.review_img ? {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`} : Logo} style={{width: 60, height: 60}} />
+                        <View style={{flexDirection: "row"}} >
+                            {ratingRender(review.author_review)}
+                        </View>
+                    </View>
+
+                }
+            </Pressable>
         )
     }
 
