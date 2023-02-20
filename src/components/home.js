@@ -1,14 +1,24 @@
 import { StyleSheet, Text, View, ScrollView, Image, Pressable, TextInput } from 'react-native';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Logo from "../../assets/logo.png"
 import HalfStar from "../../assets/HalfStar.png"
 
 export default function Home(){
+    const [results, setResults] = useState([])
+
+    useEffect(()=>{
+        axios.get(`https://rootbeerbe-production.up.railway.app/reviews`)
+            .then((res) => {
+                setResults(res.data)
+            })
+    }, [])
+
     const author_score = 3.5
 
-    const results = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"]
 
     const Card =(props)=>{
-        const {letter} = props;
+        const {review} = props;
 
         const ratingRender = (rating) => {
             let stars = []
@@ -23,10 +33,10 @@ export default function Home(){
 
         return(
             <View style={styles.card} >
-                <Text>{letter}</Text>
+                <Text>{review.brand_name}</Text>
                 <Image source={Logo} style={{width: 60, height: 60}} />
                 <View style={{flexDirection: "row"}} >
-                    {ratingRender(author_score)}
+                    {ratingRender(review.author_review)}
                 </View>
             </View>
         )
@@ -35,8 +45,8 @@ export default function Home(){
     return(
         <ScrollView contentContainerStyle={styles.content} >
             <View style={styles.content} >
-                {results.map((letter, index) => {
-                    return <Card letter={letter} />
+                {results.map((review, index) => {
+                    return <Card review={review} key={index} />
                 })}
             </View>
         </ScrollView>
