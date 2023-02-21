@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View, ScrollView, Image, Pressable } from 'react-native';
-import { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, ScrollView, RefreshControl, Image, Pressable } from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Logo from "../../assets/logo.png";
 import HalfStar from "../../assets/HalfStar.png";
 
 export default function Home(){
     const [results, setResults] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(()=>{
         axios.get(`https://rootbeerbe-production.up.railway.app/reviews`)
@@ -14,21 +15,30 @@ export default function Home(){
             });
     }, []);
 
+    const handleRefresh = useCallback(() => {
+        setRefreshing(true);
+        axios.get(`https://rootbeerbe-production.up.railway.app/reviews`)
+            .then((res) => {
+                setResults(res.data);
+                setRefreshing(false);
+            });
+    })
+
 
     const Card =(props)=>{
         const {review} = props;
         const [isFlipped, setIsFlipped] = useState(false);
 
         const ratingRender = (rating) => {
-            let stars = []
+            let stars = [];
             if(rating%1 === 0.5){
                 stars.push( <Image source={HalfStar} alt="half star rating" style={styles.halfStar} key={`half star`}/>)
-            }
+            };
             for(let i = 1; i <= rating; i++){
                 stars.unshift(<Image source={Logo} alt="star rating" style={styles.star} key={`Star ${i}/5`} />)
-            }
-            return stars
-        }
+            };
+            return stars;
+        };
 
         return(
             <Pressable onPress={()=> { setIsFlipped(!isFlipped) }} >
@@ -53,15 +63,17 @@ export default function Home(){
     }
 
     return(
-        <ScrollView contentContainerStyle={styles.content} >
+        <ScrollView contentContainerStyle={styles.content} refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        } >
             <View style={styles.content} >
                 {results.map((review, index) => {
                     return <Card review={review} key={review.review_id} />
                 })}
             </View>
         </ScrollView>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     content:{
