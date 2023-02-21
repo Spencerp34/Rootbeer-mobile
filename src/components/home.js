@@ -9,20 +9,25 @@ export default function Home(){
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(()=>{
-        axios.get(`https://rootbeerbe-production.up.railway.app/reviews`)
-            .then((res) => {
-                setResults(res.data);
-            });
+        getAxios();
     }, []);
 
     const handleRefresh = useCallback(() => {
         setRefreshing(true);
-        axios.get(`https://rootbeerbe-production.up.railway.app/reviews`)
+        getAxios()
+            .then((res) => {
+                setRefreshing(false);
+            })
+    })
+
+    const getAxios = async() => {
+        await axios.get(`https://rootbeerbe-production.up.railway.app/reviews`)
             .then((res) => {
                 setResults(res.data);
-                setRefreshing(false);
+                return res.data;
             });
-    })
+            
+    }
 
 
     const Card =(props)=>{
