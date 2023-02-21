@@ -7,6 +7,7 @@ import { Theme } from "../constants";
 import axios from 'axios';
 import ImageIcon from "../../assets/imageIcon.png";
 import CameraIcon from "../../assets/cameraIcon.png";
+import xButton from "../../assets/xButton.png";
 import schema from './validation';
 
 export default function Submission() {
@@ -42,6 +43,10 @@ export default function Submission() {
         if(!result.canceled){
             setFormData({...formData, review_img: result.assets})
         }
+    }
+
+    const handleRemove = () =>{
+        setFormData({...formData, review_img: null})
     }
 
     const submit = async() =>{
@@ -99,8 +104,15 @@ export default function Submission() {
                 <Text style={styles.error}>{formErrors.review_description}</Text>
                 <Text style={{textAlign: "center", color: Theme.rbBrown, fontWeight: "bold"}} >Optional: Attach Image</Text>
                 <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
-                    <View style={{width:200, height:200, margin: 10}} >
-                        {formData.review_img && <Image source={{uri: formData.review_img.uri}} style={{width:200, height:200}} /> }
+                    <View style={{width:200, height:200, margin: 15}} >
+                        {formData.review_img &&
+                            <View>
+                                <Image source={{uri: formData.review_img.uri}} style={{width:200, height:200}} />
+                                <Pressable onPress={handleRemove} style={{position: 'absolute', right:-30, top:-10}} >
+                                    <Image source={xButton} style={{width:25, height:25}} />
+                                </Pressable>
+                            </View>
+                        }
                     </View>
                     <View style={{justifyContent: "space-evenly"}} >
                         <Pressable onPress={handleUploadImg}>
