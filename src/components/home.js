@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Logo from "../../assets/logo.png";
 import HalfStar from "../../assets/HalfStar.png";
+import { Theme } from "../constants";
 
 export default function Home(){
     const [results, setResults] = useState([]);
@@ -17,8 +18,8 @@ export default function Home(){
         getAxios()
             .then((res) => {
                 setRefreshing(false);
-            })
-    })
+            });
+    });
 
     const getAxios = async() => {
         await axios.get(`https://rootbeerbe-production.up.railway.app/reviews`)
@@ -50,12 +51,12 @@ export default function Home(){
                 { isFlipped 
                 ? 
                     <View style={styles.card}>
-                        <Text>{review.brand_name}</Text>
-                        <Text>{review.review_description} </Text>
+                        <Text style={styles.textColor} >{review.brand_name}</Text>
+                        <Text style={styles.textColor}>{review.review_description} </Text>
                     </View>
                 : 
                     <View style={styles.card} >
-                        <Text>{review.brand_name}</Text>
+                        <Text style={styles.textColor}>{review.brand_name}</Text>
                         <Image source={ review.review_img ? {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`} : Logo} style={{width: 60, height: 60}} />
                         <View style={{flexDirection: "row"}} >
                             {ratingRender(review.author_review)}
@@ -68,15 +69,20 @@ export default function Home(){
     }
 
     return(
-        <ScrollView contentContainerStyle={styles.content} refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-        } >
-            <View style={styles.content} >
-                {results.map((review, index) => {
-                    return <Card review={review} key={review.review_id} />
-                })}
+        <View>
+            <View style={{marginLeft: 55}} >
+                <Text style={[styles.textColor, {fontWeight: "bold"}]} >Ratings</Text>
             </View>
-        </ScrollView>
+            <ScrollView contentContainerStyle={styles.content} refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+            } >
+                <View style={styles.content} >
+                    {results.map((review, index) => {
+                        return <Card review={review} key={review.review_id} />
+                    })}
+                </View>
+            </ScrollView>
+        </View>
     );
 };
 
@@ -92,7 +98,7 @@ const styles = StyleSheet.create({
     card:{
         height: 150,
         width: 150,
-        borderColor: "black",
+        borderColor: Theme.rbBrown,
         borderWidth: "1px",
         borderRadius: "5%",
         justifyContent: "center",
@@ -106,5 +112,8 @@ const styles = StyleSheet.create({
     halfStar:{
         width: 10,
         height: 20,
+    },
+    textColor:{
+        color: Theme.rbBrown,
     },
 })
