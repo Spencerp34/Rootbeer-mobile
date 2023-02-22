@@ -29,7 +29,7 @@ export default function Submission() {
             quality:0,
         })
         if(!result.canceled){
-            setFormData({...formData, review_img: result.assets[0]})
+            setFormData({...formData, review_img: result.assets[0]});
         }
     }
 
@@ -41,12 +41,12 @@ export default function Submission() {
             quality:0,
         })
         if(!result.canceled){
-            setFormData({...formData, review_img: result.assets})
+            setFormData({...formData, review_img: result.assets});
         }
     }
 
     const handleRemove = () =>{
-        setFormData({...formData, review_img: null})
+        setFormData({...formData, review_img: null});
     }
 
     const submit = async() =>{
@@ -62,7 +62,7 @@ export default function Submission() {
                         name: formData.review_img.fileName || "test",
                         uri: formData.review_img.uri,
                         type: "image/jpg",
-                    })
+                    });
                 }
         
                 axios.post(`https://rootbeerbe-production.up.railway.app/reviews`, submissionData, {
@@ -76,13 +76,13 @@ export default function Submission() {
                     })
                     .catch((err) => {
                         console.log(err)
-                    })
+                    });
             })
             .catch(async(err) => {
                 let newObj = {}
                 err.inner.map((e) => {
                     newObj = Object.assign({...newObj, [e.path]: e.message})
-                })
+                });
                 setFormErrors({
                     ...formErrors,
                     ...newObj
