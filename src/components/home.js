@@ -46,6 +46,14 @@ export default function Home(){
             return stars;
         };
 
+        const fallBackPic = (uri) =>{
+            if(uri){
+                return {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`};
+            }else{
+                return Logo;
+            };
+        };
+
         return(
             <Pressable onPress={()=> { setIsFlipped(!isFlipped) }} >
                 { isFlipped 
