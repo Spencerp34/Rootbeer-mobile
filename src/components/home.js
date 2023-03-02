@@ -34,6 +34,13 @@ export default function Home(){
     const Card =(props)=>{
         const {review} = props;
         const [isFlipped, setIsFlipped] = useState(false);
+        const [editData, setEditData] = useState({
+            brand_name: review.brand_name,
+            author_review: review.author_review,
+            shop_url: review.shop_url,
+            review_description: review.review_description,
+            review_img: review.review_img,
+        });
 
         const ratingRender = (rating) => {
             let stars = [];
@@ -53,6 +60,10 @@ export default function Home(){
                 return Logo;
             };
         };
+
+        const edit = (id) => {
+            return id;
+        }
 
         return(
             <Pressable onPress={()=> { setIsFlipped(!isFlipped) }} >
