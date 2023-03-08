@@ -9,6 +9,7 @@ import { Theme } from "../constants";
 export default function Home(){
     const [results, setResults] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const [editModal, setEditModal] = useState(false);
 
     useEffect(()=>{
         getAxios();
@@ -54,6 +55,10 @@ export default function Home(){
             return stars;
         };
 
+        const openEditModal = (rev) =>{
+            
+        }
+
         const fallBackPic = (uri) =>{
             if(uri){
                 return {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`};
@@ -73,7 +78,9 @@ export default function Home(){
                     <View style={styles.card}>
                         <View style={{flexDirection: "row"}} >
                             <Text style={styles.textColor} >{review.brand_name}</Text>
-                            <Image source={Edit} style={{width:30, height: 30, marginTop: -10}} />
+                            <Pressable onPress={()=> {openEditModal(review)}} >
+                                <Image source={Edit} style={{width:30, height: 30, marginTop: -10}} />
+                            </Pressable>
                         </View>
                         <Text style={styles.textColor}>{review.review_description} </Text>
                     </View>
