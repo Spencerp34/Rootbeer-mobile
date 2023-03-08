@@ -56,7 +56,11 @@ export default function Home(){
         };
 
         const openEditModal = (rev) =>{
-            
+            setEditModal(true);
+        }
+
+        const closeEditModal = ()=>{
+            setEditModal(false);
         }
 
         const fallBackPic = (uri) =>{
