@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView, RefreshControl, Image, Pressable } 
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Logo from "../../assets/logo.png";
+import Edit from "../../assets/editIcon.png"
 import HalfStar from "../../assets/HalfStar.png";
 import { Theme } from "../constants";
 
@@ -70,7 +71,10 @@ export default function Home(){
                 { isFlipped 
                 ? 
                     <View style={styles.card}>
-                        <Text style={styles.textColor} >{review.brand_name}</Text>
+                        <View style={{flexDirection: "row"}} >
+                            <Text style={styles.textColor} >{review.brand_name}</Text>
+                            <Image source={Edit} style={{width:30, height: 30, marginTop: -10}} />
+                        </View>
                         <Text style={styles.textColor}>{review.review_description} </Text>
                     </View>
                 : 
