@@ -4,6 +4,7 @@ import axios from 'axios';
 import Logo from "../../assets/logo.png";
 import Edit from "../../assets/editIcon.png"
 import HalfStar from "../../assets/HalfStar.png";
+import xButton from "../../assets/xButton.png";
 import { Theme } from "../constants";
 
 export default function Home(){
@@ -31,8 +32,12 @@ export default function Home(){
                 return res.data;
             });
             
-    }
-
+        }
+        
+        const closeEditModal = ()=>{
+            setEditModal(false);
+            setModalReview({});
+        }
 
     const Card =(props)=>{
         const {review} = props;
@@ -61,10 +66,6 @@ export default function Home(){
             setEditModal(true);
         }
 
-        const closeEditModal = ()=>{
-            setEditModal(false);
-            setModalReview({});
-        }
 
         const fallBackPic = (uri) =>{
             if(uri){
@@ -119,11 +120,15 @@ export default function Home(){
                     onRequestClose={() => setEditModal(false)}>
                     <View style={{
                         flex: 0.75,
-                        justifyContent: 'center',
+                        justifyContent: "space-between",
                         alignItems: 'center',
                         marginTop: 100,
-                        backgroundColor: "white"
+                        backgroundColor: "white",
+                        padding: 30
                     }} >
+                        <Pressable onPress={() => {closeEditModal()}} >
+                            <Image source={xButton} style={{height: 30, width: 30}} />
+                        </Pressable>
                         <Text>Test</Text>
                     </View>
                 </Modal>
