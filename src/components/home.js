@@ -10,6 +10,7 @@ export default function Home(){
     const [results, setResults] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [editModal, setEditModal] = useState(false);
+    const [modalReview, setModalReview] = useState();
 
     useEffect(()=>{
         getAxios();
