@@ -10,7 +10,7 @@ export default function Home(){
     const [results, setResults] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [editModal, setEditModal] = useState(false);
-    const [modalReview, setModalReview] = useState();
+    const [modalReview, setModalReview] = useState({});
 
     useEffect(()=>{
         getAxios();
@@ -57,11 +57,13 @@ export default function Home(){
         };
 
         const openEditModal = (rev) =>{
+            setModalReview(rev);
             setEditModal(true);
         }
 
         const closeEditModal = ()=>{
             setEditModal(false);
+            setModalReview({});
         }
 
         const fallBackPic = (uri) =>{
