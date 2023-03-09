@@ -113,6 +113,20 @@ export default function Home(){
             <ScrollView contentContainerStyle={styles.content} refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
             } >
+                <Modal 
+                    animationType='slide' 
+                    transparent={true} visible={editModal} 
+                    onRequestClose={() => setEditModal(false)}>
+                    <View style={{
+                        flex: 0.75,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: 100,
+                        backgroundColor: "white"
+                    }} >
+                        <Text>Test</Text>
+                    </View>
+                </Modal>
                 <View style={styles.content} >
                     {results.map((review, index) => {
                         return <Card review={review} key={review.review_id} />
