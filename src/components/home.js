@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, RefreshControl, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, RefreshControl, Image, Pressable, Modal } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Logo from "../../assets/logo.png";
