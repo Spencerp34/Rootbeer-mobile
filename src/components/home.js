@@ -5,6 +5,7 @@ import Logo from "../../assets/logo.png";
 import Edit from "../../assets/editIcon.png"
 import HalfStar from "../../assets/HalfStar.png";
 import xButton from "../../assets/xButton.png";
+import {Slider} from '@miblanchard/react-native-slider';
 import { Theme } from "../constants";
 
 export default function Home(){
@@ -127,17 +128,18 @@ export default function Home(){
                         alignItems: 'center',
                         marginTop: 100,
                         backgroundColor: "white",
-                        padding: 30
+                        padding: 30,
                     }} >
                         <View style={{justifyContent: "flex-end", alignItems: "flex-end", width: "100%"}}>
                             <Pressable onPress={() => {closeEditModal()}} >
                                 <Image source={xButton} style={{height: 30, width: 30}} />
                             </Pressable>
                         </View>
-                        <View style={{flexDirection: "column", justifyContent: "space-evenly"}} >
+                        <View style={{flexDirection: "column", justifyContent: "space-evenly", width: "100%"}} >
+                            <Text>Brand Name</Text>
                             <TextInput value={editData.brand_name} onChangeText={(change) => {setEditData({...editData, brand_name: change}); setFormErrors({...formErrors, brand_name: null})}} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
-                            <Text style={{height: 55, backgroundColor: "red"}} >{editData.author_review}</Text>
-                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <Text> Rating: {editData.author_review} </Text>
+                            <Slider maximumValue={5} minimumValue={1} value={editData.author_review} step={0.5} onValueChange={(change)=> setEditData({...editData, author_review: change[0]})} />
                             <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
                             <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
                             <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
@@ -185,5 +187,13 @@ const styles = StyleSheet.create({
     },
     textColor:{
         color: Theme.rbBrown,
+    },
+    textInput: {
+        width: "95%",
+        borderColor: Theme.rbBrown,
+        borderWidth: 2,
+        textAlign: "center",
+        margin: 10,
+        height: 40,
     },
 })
