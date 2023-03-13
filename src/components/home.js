@@ -126,10 +126,21 @@ export default function Home(){
                         backgroundColor: "white",
                         padding: 30
                     }} >
-                        <Pressable onPress={() => {closeEditModal()}} >
-                            <Image source={xButton} style={{height: 30, width: 30}} />
-                        </Pressable>
-                        <Text>Test</Text>
+                        <View style={{justifyContent: "flex-end", alignItems: "flex-end", width: "100%"}}>
+                            <Pressable onPress={() => {closeEditModal()}} >
+                                <Image source={xButton} style={{height: 30, width: 30}} />
+                            </Pressable>
+                        </View>
+                        <View style={{flexDirection: "column", justifyContent: "space-evenly"}} >
+                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                        </View>
                     </View>
                 </Modal>
                 <View style={styles.content} >
