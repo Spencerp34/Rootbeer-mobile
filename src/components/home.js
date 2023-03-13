@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, RefreshControl, Image, Pressable, Modal } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ScrollView, RefreshControl, Image, Pressable, Modal } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Logo from "../../assets/logo.png";
@@ -12,6 +12,14 @@ export default function Home(){
     const [refreshing, setRefreshing] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [modalReview, setModalReview] = useState({});
+    const defaultData = {
+        brand_name: "",
+        author_review: "",
+        shop_url: "",
+        review_description: "",
+        review_img: "",
+    }
+    const [editData, setEditData] = useState(defaultData);
 
     useEffect(()=>{
         getAxios();
@@ -37,18 +45,12 @@ export default function Home(){
         const closeEditModal = ()=>{
             setEditModal(false);
             setModalReview({});
+            setEditData(defaultData)
         }
 
     const Card =(props)=>{
         const {review} = props;
         const [isFlipped, setIsFlipped] = useState(false);
-        const [editData, setEditData] = useState({
-            brand_name: review.brand_name,
-            author_review: review.author_review,
-            shop_url: review.shop_url,
-            review_description: review.review_description,
-            review_img: review.review_img,
-        });
 
         const ratingRender = (rating) => {
             let stars = [];
@@ -64,6 +66,7 @@ export default function Home(){
         const openEditModal = (rev) =>{
             setModalReview(rev);
             setEditModal(true);
+            setEditData(rev);
         }
 
 
@@ -132,8 +135,8 @@ export default function Home(){
                             </Pressable>
                         </View>
                         <View style={{flexDirection: "column", justifyContent: "space-evenly"}} >
-                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
-                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <TextInput value={editData.brand_name} onChangeText={(change) => {setEditData({...editData, brand_name: change}); setFormErrors({...formErrors, brand_name: null})}} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                            <Text style={{height: 55, backgroundColor: "red"}} >{editData.author_review}</Text>
                             <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
                             <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
                             <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
