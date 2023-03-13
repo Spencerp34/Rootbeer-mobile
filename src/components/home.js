@@ -140,7 +140,8 @@ export default function Home(){
                             <TextInput value={editData.brand_name} onChangeText={(change) => {setEditData({...editData, brand_name: change}); setFormErrors({...formErrors, brand_name: null})}} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
                             <Text> Rating: {editData.author_review} </Text>
                             <Slider maximumValue={5} minimumValue={1} value={editData.author_review} step={0.5} onValueChange={(change)=> setEditData({...editData, author_review: change[0]})} />
-                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <Text>Shop URL</Text>
+                            <TextInput value={editData.shop_url==="null" ? "" : editData.shop_url} onChangeText={(change) => {setEditData({...editData, shop_url: change}); setEditErrors({...editErrors, shop_url: null})}} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
                             <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
                             <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
                             <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
