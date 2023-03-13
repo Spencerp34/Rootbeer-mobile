@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, View, ScrollView, RefreshControl, Image, Pressable, Modal } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import * as ImagePicker from "expo-image-picker";
 import Logo from "../../assets/logo.png";
 import Edit from "../../assets/editIcon.png";
 import ImageIcon from "../../assets/imageIcon.png";
@@ -59,7 +60,7 @@ export default function Home(){
             quality:0,
         })
         if(!result.canceled){
-            seteditData({...editData, review_img: result.assets[0]});
+            setEditData({...editData, review_img: result.assets[0]});
         }
     }
 
@@ -178,9 +179,9 @@ export default function Home(){
                             <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
                                 <View style={{width:"80%", height:80, margin: 15}} >
                                     {editData.review_img &&
-                                        <View>
-                                            <Image source={{uri: editData.review_img.uri}} style={{width:200, height:200}} />
-                                            <Pressable onPress={handleRemove} style={{position: 'absolute', right:-30, top:-10}} >
+                                        <View style={{flexDirection: "row", justifyContent: "center", alignContent: "center"}} >
+                                            <Image source={{uri: editData.review_img.uri}} style={{width:100, height:100}} />
+                                            <Pressable onPress={handleRemove} style={{position: 'absolute', right:55, top:-10}} >
                                                 <Image source={xButton} style={{width:25, height:25}} />
                                             </Pressable>
                                         </View>
