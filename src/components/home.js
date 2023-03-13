@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, View, ScrollView, RefreshControl, Image, Pressable, Modal } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import FormData from 'form-data';
 import * as ImagePicker from "expo-image-picker";
 import Logo from "../../assets/logo.png";
 import Edit from "../../assets/editIcon.png";
@@ -10,6 +11,7 @@ import HalfStar from "../../assets/HalfStar.png";
 import xButton from "../../assets/xButton.png";
 import {Slider} from '@miblanchard/react-native-slider';
 import { Theme } from "../constants";
+import schema from './validation';
 
 export default function Home(){
     const [results, setResults] = useState([]);
@@ -22,8 +24,10 @@ export default function Home(){
         shop_url: "",
         review_description: "",
         review_img: "",
+        review_id: "",
     }
     const [editData, setEditData] = useState(defaultData);
+    const [formErrors, setFormErrors] = useState({...defaultData, author_review: null});
 
     useEffect(()=>{
         getAxios();
@@ -80,6 +84,40 @@ export default function Home(){
         setEditData({...editData, review_img: null});
     }
 
+    const submit = async() =>{
+        console.log("submit pushed");
+                const submissionData = new FormData();
+                submissionData.append("review_id", editData.review_id)
+                submissionData.append("brand_name", editData.brand_name)
+                submissionData.append("author_review", editData.author_review)
+                submissionData.append("shop_url", editData.shop_url)
+                submissionData.append("review_description", editData.review_description)
+                if(editData.review_img){
+                    submissionData.append("review_img", {
+                        name: editData.review_img.fileName || "test",
+                        uri: editData.review_img.uri,
+                        type: "image/jpg",
+                    });
+                }
+                console.log("id:", editData.review_id)
+        
+                axios.put(`https://rootbeerbe-production.up.railway.app/reviews`, submissionData, {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
+                    .then((response) => {
+                        console.log("3")
+                        setEditModal(false)
+                    })
+                    .catch((err) => {
+                        console.log("4")
+                        console.log(err)
+                    });
+            
+    }
+
     const Card =(props)=>{
         const {review} = props;
         const [isFlipped, setIsFlipped] = useState(false);
@@ -104,7 +142,7 @@ export default function Home(){
 
         const fallBackPic = (uri) =>{
             if(uri){
-                return {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`};
+                return {uri: `https://rootbeerbe-production.up.railway.app/${review.review_id}`};
             }else{
                 return Logo;
             };
@@ -161,20 +199,23 @@ export default function Home(){
                         backgroundColor: "white",
                         padding: 30,
                     }} >
-                        <View style={{justifyContent: "flex-end", alignItems: "flex-end", width: "100%"}}>
+                        <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "100%"}}>
+                            <Pressable onPress={() => {submit()}} >
+                                <Text style={{...styles.textInput, height: "auto", padding: 5, color: Theme.rbBrown}} >Update</Text>
+                            </Pressable>
                             <Pressable onPress={() => {closeEditModal()}} >
                                 <Image source={xButton} style={{height: 30, width: 30}} />
                             </Pressable>
                         </View>
                         <View style={{flexDirection: "column", justifyContent: "space-evenly", width: "100%"}} >
                             <Text>Brand Name</Text>
-                            <TextInput value={editData.brand_name} onChangeText={(change) => {setEditData({...editData, brand_name: change}); seteditErrors({...editErrors, brand_name: null})}} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                            <TextInput value={editData.brand_name} onChangeText={(change) => {setEditData({...editData, brand_name: change}); setFormErrors({...formErrors, brand_name: null})}} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
                             <Text> Rating: {editData.author_review} </Text>
                             <Slider maximumValue={5} minimumValue={1} value={editData.author_review} step={0.5} onValueChange={(change)=> setEditData({...editData, author_review: change[0]})} />
                             <Text>Shop URL</Text>
-                            <TextInput value={editData.shop_url==="null"||null ? "" : editData.shop_url} onChangeText={(change) => {setEditData({...editData, shop_url: change}); setEditErrors({...editErrors, shop_url: null})}} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                            <TextInput value={editData.shop_url==="null"||null ? "" : editData.shop_url} onChangeText={(change) => {setEditData({...editData, shop_url: change}); setFormErrors({...formErrors, shop_url: null})}} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
                             <Text >Review Description</Text>
-                            <TextInput value={editData.review_description} onChangeText={(change) => {setEditData({...editData, review_description: change}); setEditErrors({...editErrors, review_description: null})}} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
+                            <TextInput value={editData.review_description} onChangeText={(change) => {setEditData({...editData, review_description: change}); setFormErrors({...formErrors, review_description: null})}} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
                             <Text>Picture:</Text>
                             <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
                                 <View style={{width:"80%", height:80, margin: 15}} >

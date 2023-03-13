@@ -6,6 +6,7 @@ const schema = yup.object().shape({
     shop_url: yup.string().optional().url("Not Valid URL").nullable(),
     review_description: yup.string().required("Review required"),
     review_img: yup.object().optional().nullable(),
+    review_id: yup.string().optional().nullable(),
 });
 
 export default schema;
