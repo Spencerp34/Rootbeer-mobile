@@ -2,7 +2,9 @@ import { StyleSheet, Text, TextInput, View, ScrollView, RefreshControl, Image, P
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Logo from "../../assets/logo.png";
-import Edit from "../../assets/editIcon.png"
+import Edit from "../../assets/editIcon.png";
+import ImageIcon from "../../assets/imageIcon.png";
+import CameraIcon from "../../assets/cameraIcon.png";
 import HalfStar from "../../assets/HalfStar.png";
 import xButton from "../../assets/xButton.png";
 import {Slider} from '@miblanchard/react-native-slider';
@@ -41,13 +43,41 @@ export default function Home(){
                 return res.data;
             });
             
-        }
+    }
         
-        const closeEditModal = ()=>{
-            setEditModal(false);
-            setModalReview({});
-            setEditData(defaultData)
+    const closeEditModal = ()=>{
+        setEditModal(false);
+        setModalReview({});
+        setEditData(defaultData)
+    }
+
+    const handleUploadImg = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4,3],
+            quality:0,
+        })
+        if(!result.canceled){
+            seteditData({...editData, review_img: result.assets[0]});
         }
+    }
+
+    const handleTakeImg = async () => {
+        let result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4,3],
+            quality:0,
+        })
+        if(!result.canceled){
+            setEditData({...editData, review_img: result.assets});
+        }
+    }
+
+    const handleRemove = () =>{
+        setEditData({...editData, review_img: null});
+    }
 
     const Card =(props)=>{
         const {review} = props;
@@ -137,14 +167,34 @@ export default function Home(){
                         </View>
                         <View style={{flexDirection: "column", justifyContent: "space-evenly", width: "100%"}} >
                             <Text>Brand Name</Text>
-                            <TextInput value={editData.brand_name} onChangeText={(change) => {setEditData({...editData, brand_name: change}); setFormErrors({...formErrors, brand_name: null})}} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                            <TextInput value={editData.brand_name} onChangeText={(change) => {setEditData({...editData, brand_name: change}); seteditErrors({...editErrors, brand_name: null})}} placeholder='Brand Name' placeholderTextColor={"#aaa"} style={styles.textInput} />
                             <Text> Rating: {editData.author_review} </Text>
                             <Slider maximumValue={5} minimumValue={1} value={editData.author_review} step={0.5} onValueChange={(change)=> setEditData({...editData, author_review: change[0]})} />
                             <Text>Shop URL</Text>
                             <TextInput value={editData.shop_url==="null"||null ? "" : editData.shop_url} onChangeText={(change) => {setEditData({...editData, shop_url: change}); setEditErrors({...editErrors, shop_url: null})}} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
                             <Text >Review Description</Text>
                             <TextInput value={editData.review_description} onChangeText={(change) => {setEditData({...editData, review_description: change}); setEditErrors({...editErrors, review_description: null})}} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
-                            <Text style={{height: 150}} >Picture:</Text>
+                            <Text>Picture:</Text>
+                            <View style={{flexDirection: "row", justifyContent: "space-evenly"}} >
+                                <View style={{width:"80%", height:80, margin: 15}} >
+                                    {editData.review_img &&
+                                        <View>
+                                            <Image source={{uri: editData.review_img.uri}} style={{width:200, height:200}} />
+                                            <Pressable onPress={handleRemove} style={{position: 'absolute', right:-30, top:-10}} >
+                                                <Image source={xButton} style={{width:25, height:25}} />
+                                            </Pressable>
+                                        </View>
+                                    }
+                                </View>
+                                <View style={{justifyContent: "space-evenly"}} >
+                                    <Pressable onPress={handleUploadImg}>
+                                        <Image source={ImageIcon} style={{width:50, height: 50}} />
+                                    </Pressable>
+                                    <Pressable onPress={handleTakeImg}>
+                                        <Image source={CameraIcon} style={{width:50, height: 50}} />
+                                    </Pressable>
+                                </View>
+                            </View>
                         </View>
                     </View>
                 </Modal>
