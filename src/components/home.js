@@ -85,7 +85,6 @@ export default function Home(){
     }
 
     const submit = async() =>{
-        console.log("submit pushed");
                 const submissionData = new FormData();
                 submissionData.append("review_id", editData.review_id)
                 submissionData.append("brand_name", editData.brand_name)
@@ -99,7 +98,6 @@ export default function Home(){
                         type: "image/jpg",
                     });
                 }
-                console.log("id:", editData.review_id)
         
                 axios.put(`https://rootbeerbe-production.up.railway.app/reviews`, submissionData, {
                     headers: {
@@ -108,11 +106,9 @@ export default function Home(){
                     }
                 })
                     .then((response) => {
-                        console.log("3")
                         setEditModal(false)
                     })
                     .catch((err) => {
-                        console.log("4")
                         console.log(err)
                     });
             
