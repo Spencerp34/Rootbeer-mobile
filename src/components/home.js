@@ -141,11 +141,10 @@ export default function Home(){
                             <Text> Rating: {editData.author_review} </Text>
                             <Slider maximumValue={5} minimumValue={1} value={editData.author_review} step={0.5} onValueChange={(change)=> setEditData({...editData, author_review: change[0]})} />
                             <Text>Shop URL</Text>
-                            <TextInput value={editData.shop_url==="null" ? "" : editData.shop_url} onChangeText={(change) => {setEditData({...editData, shop_url: change}); setEditErrors({...editErrors, shop_url: null})}} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
-                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
-                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
-                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
-                            <Text style={{height: 55, backgroundColor: "red"}} >test</Text>
+                            <TextInput value={editData.shop_url==="null"||null ? "" : editData.shop_url} onChangeText={(change) => {setEditData({...editData, shop_url: change}); setEditErrors({...editErrors, shop_url: null})}} placeholder='Shop URL' placeholderTextColor={"#aaa"} style={styles.textInput} />
+                            <Text >Review Description</Text>
+                            <TextInput value={editData.review_description} onChangeText={(change) => {setEditData({...editData, review_description: change}); setEditErrors({...editErrors, review_description: null})}} placeholder='Review' placeholderTextColor={"#aaa"} style={[styles.textInput, styles.bigTextInput]} multiline numberOfLines={5} />
+                            <Text style={{height: 150}} >Picture:</Text>
                         </View>
                     </View>
                 </Modal>
@@ -196,5 +195,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         margin: 10,
         height: 40,
+    },
+    bigTextInput: {
+        height: 100,
     },
 })
