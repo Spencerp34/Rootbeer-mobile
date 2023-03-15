@@ -97,7 +97,7 @@ export default function Home(){
                         uri: editData.review_img.uri,
                         type: "image/jpg",
                     });
-                }
+                };
         
                 axios.put(`https://rootbeerbe-production.up.railway.app/reviews`, submissionData, {
                     headers: {
