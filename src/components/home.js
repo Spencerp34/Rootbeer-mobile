@@ -144,10 +144,6 @@ export default function Home(){
             };
         };
 
-        const edit = (id) => {
-            return id;
-        }
-
         return(
             <Pressable onPress={()=> { setIsFlipped(!isFlipped) }} >
                 { isFlipped 
