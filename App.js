@@ -9,7 +9,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      <Swiper>
+      <Swiper showsPagination={false} >
         <Home />
         <Submission />
       </Swiper>
