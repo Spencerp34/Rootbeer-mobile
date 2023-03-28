@@ -139,6 +139,7 @@ export default function Home(){
 
         const backupPic = (img) =>{
             setImage(Logo);
+            console.log("error")
         }
 
         return(
@@ -157,7 +158,11 @@ export default function Home(){
                 : 
                     <View style={styles.card} >
                         <Text style={styles.textColor}>{review.brand_name}</Text>
-                        <Image onError={()=>backupPic(review.review_img)} source={ review.review_img ? {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`} : image} style={{width: 60, height: 60}} />
+                        <Image 
+                            source={ review.review_img ? {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`} : image} 
+                            defaultSource={Logo}
+                            style={{width: 60, height: 60}} 
+                        />
                         <View style={{flexDirection: "row"}} >
                             {ratingRender(review.author_review)}
                         </View>
