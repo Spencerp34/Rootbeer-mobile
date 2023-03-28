@@ -117,7 +117,7 @@ export default function Home(){
     const Card =(props)=>{
         const {review} = props;
         const [isFlipped, setIsFlipped] = useState(false);
-        const [image, setImage] = useState();
+        const [image, setImage] = useState(Logo);
 
         const ratingRender = (rating) => {
             let stars = [];
@@ -137,16 +137,8 @@ export default function Home(){
         }
 
 
-        const fallBackPic = (uri) =>{
-            if(uri){
-                return {uri: `https://rootbeerbe-production.up.railway.app/${review.review_id}`};
-            }else{
-                return Logo;
-            };
-        };
-
-        const backupPic = () =>{
-            setImage(Logo)
+        const backupPic = (img) =>{
+            setImage(Logo);
         }
 
         return(
@@ -165,7 +157,7 @@ export default function Home(){
                 : 
                     <View style={styles.card} >
                         <Text style={styles.textColor}>{review.brand_name}</Text>
-                        <Image onError={()=>backupPic()} source={ review.review_img ? {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`} : image} style={{width: 60, height: 60}} />
+                        <Image onError={()=>backupPic(review.review_img)} source={ review.review_img ? {uri: `https://rootbeerbe-production.up.railway.app/${review.review_img}`} : image} style={{width: 60, height: 60}} />
                         <View style={{flexDirection: "row"}} >
                             {ratingRender(review.author_review)}
                         </View>
