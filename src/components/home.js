@@ -11,7 +11,6 @@ import HalfStar from "../../assets/HalfStar.png";
 import xButton from "../../assets/xButton.png";
 import {Slider} from '@miblanchard/react-native-slider';
 import { Theme } from "../constants";
-import schema from './validation';
 
 export default function Home(){
     const [results, setResults] = useState([]);
